@@ -1,6 +1,8 @@
 ## Useful github repositories for reference I've found
 
 
+HOLDING IT AT THE MOMENT -> Start after NFT exploration
+
 https://github.com/Seedifyfund/Launchpad-smart-contract
 
 https://github.com/cryptoboss01/token_launchpad_and_staking
