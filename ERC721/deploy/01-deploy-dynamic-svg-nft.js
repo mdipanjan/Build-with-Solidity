@@ -1,6 +1,6 @@
 const { network } = require("hardhat")
 const { networkConfig, developmentChains } = require("../helper-hardhat-config")
-// const { verify } = require("../utils/verify")
+const { verify } = require("../utils/verify")
 const { storeImages, storeTokenUriMetadata } = require("../utils/uploadToPinata")
 
 const FUND_AMOUNT = "1000000000000000000000"
@@ -52,30 +52,30 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     }
 
     log("----------------------------------------------------")
-    // arguments = [
-    //     vrfCoordinatorV2Address,
-    //     subscriptionId,
-    //     networkConfig[chainId]["gasLane"],
-    //     networkConfig[chainId]["mintFee"],
-    //     networkConfig[chainId]["callbackGasLimit"],
-    //     tokenUris,
-    // ]
-    // const randomIpfsNft = await deploy("RandomIpfsNft", {
-    //     from: deployer,
-    //     args: arguments,
-    //     log: true,
-    //     waitConfirmations: network.config.blockConfirmations || 1,
-    // })
+    arguments = [
+        vrfCoordinatorV2Address,
+        subscriptionId,
+        networkConfig[chainId]["gasLane"],
+        networkConfig[chainId]["mintFee"],
+        networkConfig[chainId]["callbackGasLimit"],
+        tokenUris,
+    ]
+    const randomIpfsNft = await deploy("RandomIpfsNft", {
+        from: deployer,
+        args: arguments,
+        log: true,
+        waitConfirmations: network.config.blockConfirmations || 1,
+    })
 
-    // if (chainId == 31337) {
-    //     await vrfCoordinatorV2Mock.addConsumer(subscriptionId, randomIpfsNft.address)
-    // }
+    if (chainId == 31337) {
+        await vrfCoordinatorV2Mock.addConsumer(subscriptionId, randomIpfsNft.address)
+    }
 
-    // // Verify the deployment
-    // if (!developmentChains.includes(network.name) && process.env.ETHERSCAN_API_KEY) {
-    //     log("Verifying...")
-    //     await verify(randomIpfsNft.address, arguments)
-    // }
+    // Verify the deployment
+    if (!developmentChains.includes(network.name) && process.env.ETHERSCAN_API_KEY) {
+        log("Verifying...")
+        await verify(randomIpfsNft.address, arguments)
+    }
 }
 
 async function handleTokenUris() {
